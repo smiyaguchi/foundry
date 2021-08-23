@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"gihtub.com/smiyaguchi/internal/spec"
+	"github.com/smiyaguchi/foundry/internal/spec"
 	"github.com/spf13/pflag"
 )
 

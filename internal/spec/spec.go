@@ -21,5 +21,5 @@ func Load(filename string) (*Spec, error) {
 	if err != nil {
 		return nil, err
 	}
-	return spec, nil
+	return &spec, nil
 }
