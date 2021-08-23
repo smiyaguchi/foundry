@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"gihtub.com/smiyaguchi/internal/spec"
 	"github.com/spf13/pflag"
 )
 
@@ -24,7 +25,7 @@ func main() {
 	switch os.Args[1] {
 	case "gen":
 		cmdGen.Parse(os.Args[2:])
-		fmt.Println(filename)
+		spec.Load(filename)
 	default:
 		fmt.Println("no define subcommand")
 		os.Exit(1)
