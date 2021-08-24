@@ -7,7 +7,13 @@ import (
 )
 
 type Spec struct {
-	Schema interface{}
+	Schema map[string]Field `yaml:"schema"`
+}
+
+type Field struct {
+	Typ    string           `yaml:"type"`
+	Gen    string           `yaml:"gen"`
+	Schema map[string]Field `yaml:"schema,omitempty"`
 }
 
 func Load(filename string) (*Spec, error) {

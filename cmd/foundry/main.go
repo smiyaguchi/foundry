@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/smiyaguchi/foundry/internal/gen"
 	"github.com/smiyaguchi/foundry/internal/spec"
 	"github.com/spf13/pflag"
 )
@@ -25,7 +26,17 @@ func main() {
 	switch os.Args[1] {
 	case "gen":
 		cmdGen.Parse(os.Args[2:])
-		spec.Load(filename)
+		spec, err := spec.Load(filename)
+		if err != nil {
+			fmt.Printf("failed to load spec file: %v\n", err)
+			os.Exit(1)
+		}
+		s, err := gen.Convert(spec)
+		if err != nil {
+			fmt.Printf("failed to generate data: %v\n", err)
+			os.Exit(1)
+		}
+		fmt.Println(s)
 	default:
 		fmt.Println("no define subcommand")
 		os.Exit(1)
