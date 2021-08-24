@@ -13,7 +13,6 @@ type Generator interface {
 
 func Convert(spec *spec.Spec) (string, error) {
 	o := make(map[string]interface{})
-	fmt.Println(spec.Schema)
 
 	for key, value := range spec.Schema {
 		gen, err := NewGenerator(value)
