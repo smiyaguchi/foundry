@@ -3,15 +3,11 @@ package gen
 import (
 	"math/rand"
 	"time"
-
-	"github.com/smiyaguchi/foundry/internal/spec"
 )
 
-type genSeed struct {
-	Num int
-}
+type genSeed struct{}
 
-func (g *genSeed) Generate(spec spec.Field) (interface{}, error) {
+func (g *genSeed) Generate(option GenOption) (interface{}, error) {
 	rand.Seed(time.Now().UnixNano())
-	return rand.Intn(g.Num), nil
+	return rand.Intn(10), nil
 }

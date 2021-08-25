@@ -3,13 +3,16 @@ package gen
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/smiyaguchi/foundry/internal/spec"
 )
 
 type Generator interface {
-	Generate(spec spec.Field) (interface{}, error)
+	Generate(option GenOption) (interface{}, error)
 }
+
+type GenOption map[string]interface{}
 
 func Convert(spec *spec.Spec) (string, error) {
 	o := make(map[string]interface{})
@@ -19,7 +22,7 @@ func Convert(spec *spec.Spec) (string, error) {
 		if err != nil {
 			return "", fmt.Errorf("failed to new generator: %v\n", err)
 		}
-		v, err := gen.Generate(value)
+		v, err := gen.Generate(value.Option)
 		if err != nil {
 			return "", fmt.Errorf("failed to generate data: %v\n", err)
 		}
@@ -36,8 +39,8 @@ func Convert(spec *spec.Spec) (string, error) {
 func NewGenerator(field spec.Field) (Generator, error) {
 	switch field.Gen {
 	case "random":
-		return &genSeed{Num: 10}, nil
+		return &genSeed{}, nil
 	default:
-		return nil, fmt.Errorf("not support generator: %s\n", field.Gen)
+		return &genDefault{typ: strings.ToLower(field.Typ)}, nil
 	}
 }

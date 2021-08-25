@@ -11,9 +11,10 @@ type Spec struct {
 }
 
 type Field struct {
-	Typ    string           `yaml:"type"`
-	Gen    string           `yaml:"gen"`
-	Schema map[string]Field `yaml:"schema,omitempty"`
+	Typ    string                 `yaml:"type"`
+	Gen    string                 `yaml:"gen"`
+	Option map[string]interface{} `yaml:"option"`
+	Schema map[string]Field       `yaml:"schema,omitempty"`
 }
 
 func Load(filename string) (*Spec, error) {
