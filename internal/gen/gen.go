@@ -37,7 +37,8 @@ func Convert(spec *spec.Spec) (string, error) {
 }
 
 func NewGenerator(field spec.Field) (Generator, error) {
-	switch field.Gen {
+	gen := strings.ToLower(field.Gen)
+	switch gen {
 	case "random":
 		return &genSeed{}, nil
 	default:

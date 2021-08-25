@@ -1,5 +1,5 @@
 .PHONY: all
-all: build run clean
+all: build run
 
 .PHONY: build
 build:
@@ -8,7 +8,3 @@ build:
 .PHONY: run
 run:
 	./foundry gen -f ./test/spec.yaml
-
-.PHONY: clean
-clean:
-	rm ./foundry
