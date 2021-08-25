@@ -1,0 +1,7 @@
+schema:
+  id:
+    type: int
+  name:
+    type: string
+  enable:
+    type: bool
