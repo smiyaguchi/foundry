@@ -3,6 +3,7 @@ schema:
     type: int
   name:
     type: string
+    value: ""
   mail:
     type: string
     value: example@exmaple.com

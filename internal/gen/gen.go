@@ -3,7 +3,6 @@ package gen
 import (
 	"encoding/json"
 	"fmt"
-	"strconv"
 	"strings"
 
 	"github.com/smiyaguchi/foundry/internal/spec"
@@ -19,7 +18,7 @@ func Convert(spec *spec.Spec) (string, error) {
 	o := make(map[string]interface{})
 
 	for key, field := range spec.Schema {
-		if field.Value != "" {
+		if field.Value != nil {
 			v, err := convertValue(field.Typ, field.Value)
 			if err != nil {
 				return "", err
@@ -55,30 +54,27 @@ func NewGenerator(field spec.Field) (Generator, error) {
 	}
 }
 
-func convertValue(typ, value string) (interface{}, error) {
+func convertValue(typ string, value interface{}) (interface{}, error) {
 	t := strings.ToLower(typ)
 	switch t {
 	case "string":
-		return value, nil
+		if v, ok := value.(string); ok {
+			return v, nil
+		}
 	case "int":
-		i, err := strconv.Atoi(value)
-		if err != nil {
-			return nil, err
+		if v, ok := value.(int); ok {
+			return v, nil
 		}
-		return i, nil
 	case "float":
-		f, err := strconv.ParseFloat(value, 64)
-		if err != nil {
-			return nil, err
+		if v, ok := value.(float64); ok {
+			return v, nil
 		}
-		return f, nil
 	case "bool":
-		b, err := strconv.ParseBool(value)
-		if err != nil {
-			return nil, err
+		if v, ok := value.(bool); ok {
+			return v, nil
 		}
-		return b, nil
 	default:
 		return nil, fmt.Errorf("not support value type: %s\n", value)
 	}
+	return nil, fmt.Errorf("failed to cast type: %s, value:%v\n", t, value)
 }
