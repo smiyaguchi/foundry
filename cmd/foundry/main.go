@@ -9,13 +9,17 @@ import (
 	"github.com/spf13/pflag"
 )
 
-var filename string
+var (
+	num      int
+	filename string
+)
 
 func main() {
 	defaults := pflag.NewFlagSet("defaults for all commands", pflag.ExitOnError)
 
 	cmdGen := pflag.NewFlagSet("gen", pflag.ExitOnError)
 	cmdGen.StringVarP(&filename, "filename", "f", "spec.yaml", "spec filename path")
+	cmdGen.IntVarP(&num, "num", "n", 1, "generate num")
 	cmdGen.AddFlagSet(defaults)
 
 	if len(os.Args) == 1 {
@@ -31,7 +35,7 @@ func main() {
 			fmt.Printf("failed to load spec file: %v\n", err)
 			os.Exit(1)
 		}
-		s, err := gen.Convert(spec)
+		s, err := gen.Convert(spec, num)
 		if err != nil {
 			fmt.Printf("failed to generate data: %v\n", err)
 			os.Exit(1)

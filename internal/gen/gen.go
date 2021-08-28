@@ -14,28 +14,53 @@ type Generator interface {
 
 type GenOption map[string]interface{}
 
-func Convert(spec *spec.Spec) (string, error) {
-	o := make(map[string]interface{})
+func Convert(spec *spec.Spec, num int) (string, error) {
+	o := make([]map[string]interface{}, 0)
 
-	for key, field := range spec.Schema {
-		if field.Value != nil {
-			v, err := convertValue(field.Typ, field.Value)
+	for i := 0; i < num; i++ {
+		o = append(o, make(map[string]interface{}))
+		for key, field := range spec.Schema {
+			if field.Value != nil {
+				v, err := convertValue(field.Typ, field.Value)
+				if err != nil {
+					return "", err
+				}
+				o[i][key] = v
+				continue
+			}
+			gen, err := NewGenerator(field)
 			if err != nil {
-				return "", err
+				return "", fmt.Errorf("failed to new generator: %v\n", err)
+			}
+			v, err := gen.Generate(field.Option)
+			if err != nil {
+				return "", fmt.Errorf("failed to generate data: %v\n", err)
+			}
+			o[i][key] = v
+		}
+	}
+
+	/*
+		for key, field := range spec.Schema {
+			if field.Value != nil {
+				v, err := convertValue(field.Typ, field.Value)
+				if err != nil {
+					return "", err
+				}
+				o[key] = v
+				continue
+			}
+			gen, err := NewGenerator(field)
+			if err != nil {
+				return "", fmt.Errorf("failed to new generator: %v\n", err)
+			}
+			v, err := gen.Generate(field.Option)
+			if err != nil {
+				return "", fmt.Errorf("failed to generate data: %v\n", err)
 			}
 			o[key] = v
-			continue
 		}
-		gen, err := NewGenerator(field)
-		if err != nil {
-			return "", fmt.Errorf("failed to new generator: %v\n", err)
-		}
-		v, err := gen.Generate(field.Option)
-		if err != nil {
-			return "", fmt.Errorf("failed to generate data: %v\n", err)
-		}
-		o[key] = v
-	}
+	*/
 
 	b, err := json.Marshal(o)
 	if err != nil {
@@ -47,12 +72,14 @@ func Convert(spec *spec.Spec) (string, error) {
 func NewGenerator(field spec.Field) (Generator, error) {
 	gen := strings.ToLower(field.Gen)
 	switch gen {
-	case "random":
-		return &genSeed{}, nil
 	case "ipv4":
 		return &genIPv4{}, nil
 	case "ipv6":
 		return &genIPv6{}, nil
+	case "random":
+		return &genSeed{}, nil
+	case "uuid":
+		return &genUUID{}, nil
 	default:
 		return &genDefault{typ: strings.ToLower(field.Typ)}, nil
 	}

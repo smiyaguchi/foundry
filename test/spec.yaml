@@ -13,5 +13,8 @@ schema:
   ipv6:
     type: string
     gen: ipv6
+  uuid:
+    type: string
+    gen: uuid
   enable:
     type: bool
