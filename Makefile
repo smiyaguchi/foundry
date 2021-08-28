@@ -8,3 +8,4 @@ build:
 .PHONY: run
 run:
 	./foundry gen -f ./test/spec.yaml
+	./foundry gen -f ./test/spec.yaml -n 3
