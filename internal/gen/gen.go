@@ -40,28 +40,6 @@ func Convert(spec *spec.Spec, num int) (string, error) {
 		}
 	}
 
-	/*
-		for key, field := range spec.Schema {
-			if field.Value != nil {
-				v, err := convertValue(field.Typ, field.Value)
-				if err != nil {
-					return "", err
-				}
-				o[key] = v
-				continue
-			}
-			gen, err := NewGenerator(field)
-			if err != nil {
-				return "", fmt.Errorf("failed to new generator: %v\n", err)
-			}
-			v, err := gen.Generate(field.Option)
-			if err != nil {
-				return "", fmt.Errorf("failed to generate data: %v\n", err)
-			}
-			o[key] = v
-		}
-	*/
-
 	b, err := json.Marshal(o)
 	if err != nil {
 		return "", fmt.Errorf("failed to marshal json: %v\n", err)
