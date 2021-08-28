@@ -16,5 +16,13 @@ schema:
   uuid:
     type: string
     gen: uuid
+  msg:
+    schema:
+      body:
+        type: string
+      msg:
+        schema:
+          body:
+            type: string
   enable:
     type: bool

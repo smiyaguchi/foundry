@@ -73,6 +73,26 @@ schema:
 				},
 			},
 		},
+		{
+			name: "nest",
+			specBody: `
+schema:
+    name:
+        schema:
+            foo:
+                type: string`,
+			want: Spec{
+				Schema: map[string]Field{
+					"name": {
+						Schema: map[string]Field{
+							"foo": {
+								Typ: "string",
+							},
+						},
+					},
+				},
+			},
+		},
 	}
 
 	for _, test := range tests {

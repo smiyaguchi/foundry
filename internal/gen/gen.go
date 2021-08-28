@@ -19,25 +19,33 @@ func Convert(spec *spec.Spec, num int) (string, error) {
 
 	for i := 0; i < num; i++ {
 		o = append(o, make(map[string]interface{}))
-		for key, field := range spec.Schema {
-			if field.Value != nil {
-				v, err := convertValue(field.Typ, field.Value)
+		v, err := schemaToValue(spec.Schema)
+		if err != nil {
+			return "", err
+		}
+		o[i] = v
+		/*
+			o = append(o, make(map[string]interface{}))
+			for key, field := range spec.Schema {
+				if field.Value != nil {
+					v, err := convertValue(field.Typ, field.Value)
+					if err != nil {
+						return "", err
+					}
+					o[i][key] = v
+					continue
+				}
+				gen, err := NewGenerator(field)
 				if err != nil {
-					return "", err
+					return "", fmt.Errorf("failed to new generator: %v\n", err)
+				}
+				v, err := gen.Generate(field.Option)
+				if err != nil {
+					return "", fmt.Errorf("failed to generate data: %v\n", err)
 				}
 				o[i][key] = v
-				continue
 			}
-			gen, err := NewGenerator(field)
-			if err != nil {
-				return "", fmt.Errorf("failed to new generator: %v\n", err)
-			}
-			v, err := gen.Generate(field.Option)
-			if err != nil {
-				return "", fmt.Errorf("failed to generate data: %v\n", err)
-			}
-			o[i][key] = v
-		}
+		*/
 	}
 
 	b, err := json.Marshal(o)
@@ -45,6 +53,39 @@ func Convert(spec *spec.Spec, num int) (string, error) {
 		return "", fmt.Errorf("failed to marshal json: %v\n", err)
 	}
 	return string(b), nil
+}
+
+func schemaToValue(schema spec.Schema) (map[string]interface{}, error) {
+	o := make(map[string]interface{})
+	for key, field := range schema {
+		if len(field.Schema) != 0 {
+			v, err := schemaToValue(field.Schema)
+			if err != nil {
+				return nil, err
+			}
+			o[key] = v
+			continue
+		}
+
+		if field.Value != nil {
+			v, err := convertValue(field.Typ, field.Value)
+			if err != nil {
+				return nil, err
+			}
+			o[key] = v
+			continue
+		}
+		gen, err := NewGenerator(field)
+		if err != nil {
+			return nil, fmt.Errorf("failed to new generator: %v\n", err)
+		}
+		v, err := gen.Generate(field.Option)
+		if err != nil {
+			return nil, fmt.Errorf("failed to generate data: %v\n", err)
+		}
+		o[key] = v
+	}
+	return o, nil
 }
 
 func NewGenerator(field spec.Field) (Generator, error) {
