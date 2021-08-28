@@ -3,5 +3,8 @@ schema:
     type: int
   name:
     type: string
+  mail:
+    type: string
+    value: example@exmaple.com
   enable:
     type: bool

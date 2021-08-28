@@ -13,6 +13,7 @@ type Spec struct {
 type Field struct {
 	Typ    string                 `yaml:"type"`
 	Gen    string                 `yaml:"gen"`
+	Value  string                 `yaml:"value"`
 	Option map[string]interface{} `yaml:"option"`
 	Schema map[string]Field       `yaml:"schema,omitempty"`
 }
