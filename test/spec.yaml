@@ -7,5 +7,8 @@ schema:
   mail:
     type: string
     value: example@exmaple.com
+  ipAddres:
+    type: string
+    gen: ipv4
   enable:
     type: bool
