@@ -7,8 +7,11 @@ schema:
   mail:
     type: string
     value: example@exmaple.com
-  ipAddres:
+  ipv4:
     type: string
     gen: ipv4
+  ipv6:
+    type: string
+    gen: ipv6
   enable:
     type: bool

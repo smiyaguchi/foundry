@@ -51,6 +51,8 @@ func NewGenerator(field spec.Field) (Generator, error) {
 		return &genSeed{}, nil
 	case "ipv4":
 		return &genIPv4{}, nil
+	case "ipv6":
+		return &genIPv6{}, nil
 	default:
 		return &genDefault{typ: strings.ToLower(field.Typ)}, nil
 	}
