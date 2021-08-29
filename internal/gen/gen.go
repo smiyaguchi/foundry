@@ -24,28 +24,6 @@ func Convert(spec *spec.Spec, num int) (string, error) {
 			return "", err
 		}
 		o[i] = v
-		/*
-			o = append(o, make(map[string]interface{}))
-			for key, field := range spec.Schema {
-				if field.Value != nil {
-					v, err := convertValue(field.Typ, field.Value)
-					if err != nil {
-						return "", err
-					}
-					o[i][key] = v
-					continue
-				}
-				gen, err := NewGenerator(field)
-				if err != nil {
-					return "", fmt.Errorf("failed to new generator: %v\n", err)
-				}
-				v, err := gen.Generate(field.Option)
-				if err != nil {
-					return "", fmt.Errorf("failed to generate data: %v\n", err)
-				}
-				o[i][key] = v
-			}
-		*/
 	}
 
 	b, err := json.Marshal(o)
