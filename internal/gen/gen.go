@@ -15,22 +15,20 @@ type Generator interface {
 type GenOption map[string]interface{}
 
 func Convert(spec *spec.Spec, num int) (string, error) {
-	o := make([]map[string]interface{}, 0)
-
+	var result string
 	for i := 0; i < num; i++ {
-		o = append(o, make(map[string]interface{}))
 		v, err := schemaToValue(spec.Schema)
 		if err != nil {
 			return "", err
 		}
-		o[i] = v
+		b, err := json.Marshal(v)
+		if err != nil {
+			return "", fmt.Errorf("failed to marshal json: %v\n", err)
+		}
+		result += string(b)
 	}
 
-	b, err := json.Marshal(o)
-	if err != nil {
-		return "", fmt.Errorf("failed to marshal json: %v\n", err)
-	}
-	return string(b), nil
+	return result, nil
 }
 
 func schemaToValue(schema spec.Schema) (map[string]interface{}, error) {
