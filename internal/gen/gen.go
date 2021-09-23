@@ -51,10 +51,7 @@ func schemaToValue(schema spec.Schema) (map[string]interface{}, error) {
 			o[key] = v
 			continue
 		}
-		gen, err := NewGenerator(field)
-		if err != nil {
-			return nil, fmt.Errorf("failed to new generator: %v\n", err)
-		}
+		gen := NewGenerator(field)
 		v, err := gen.Generate(field.Option)
 		if err != nil {
 			return nil, fmt.Errorf("failed to generate data: %v\n", err)
@@ -64,19 +61,19 @@ func schemaToValue(schema spec.Schema) (map[string]interface{}, error) {
 	return o, nil
 }
 
-func NewGenerator(field spec.Field) (Generator, error) {
+func NewGenerator(field spec.Field) Generator {
 	gen := strings.ToLower(field.Gen)
 	switch gen {
 	case "ipv4":
-		return &genIPv4{}, nil
+		return &genIPv4{}
 	case "ipv6":
-		return &genIPv6{}, nil
+		return &genIPv6{}
 	case "random":
-		return &genSeed{}, nil
+		return &genSeed{}
 	case "uuid":
-		return &genUUID{}, nil
+		return &genUUID{}
 	default:
-		return &genDefault{typ: strings.ToLower(field.Typ)}, nil
+		return &genDefault{typ: strings.ToLower(field.Typ)}
 	}
 }
 
