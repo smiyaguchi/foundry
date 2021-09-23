@@ -8,12 +8,10 @@ $ make build
 go build ./cmd/foundry
 
 $ ./foundry gen -f spec.yaml
-[{"enable":true,"id":74,"ipv4":"251.52.163.82","ipv6":"85b8:380c:44ae:63ba:2ba3:f4f0:eadb:8c5c","mail":"example@exmaple.com","msg":{"body":"ZICaW7gsqc","msg":{"body":"gIf33JMhNB"}},"name":"","uuid":"e8c66407-6b21-43e9-995e-7a4c699e8a8f"}
+{"enable":false,"id":44,"ipv4":"178.23.106.51","ipv6":"fa75:6b15:7e13:ed00:6bd6:ae4b:d3dd:dd0a","mail":"example@exmaple.com","msg":{"body":"crNDAcT8KO","msg":{"body":"AGzk2CxrLU"}},"name":"","uuid":"a5b50fb2-2a42-4ead-83f4-ef23ea68258a"}
 
 $ ./foundry gen -f spce.yaml -n 3
-[{"enable":true,"id":39,"ipv4":"108.93.4.122","ipv6":"6a60:3ba7:43fa:f9a2:2e16:b80f:9bbd:8e81","mail":"example@exmaple.com","msg":{"body":"w6Kz4DVTIc","msg":{"body":"ctlV8UCnxD"}},"name":"","uuid":"aa575e94-8861-4720-8569-04d41210d177"},
-{"enable":false,"id":73,"ipv4":"169.101.238.116","ipv6":"2872:ab3b:7bc:8559:7d87:7296:85bc:3790","mail":"example@exmaple.com","msg":{"body":"FCo1uvuIei","msg":{"body":"iuHabBvuYs"}},"name":"","uuid":"0081f577-5674-4462-a477-79ec64cff658"},
-{"enable":false,"id":37,"ipv4":"21.135.56.195","ipv6":"85d0:4919:7250:b008:9249:21d8:8ac1:ec17","mail":"example@exmaple.com","msg":{"body":"pK85dDH91a","msg":{"body":"JHaa3mPVO5"}},"name":"","uuid":"646650ed-5306-4466-a8b6-6516cb0f0966"}]
+{"enable":true,"id":6,"ipv4":"12.224.105.95","ipv6":"d165:48d9:1364:7ec9:83b0:b035:6aee:a5b5","mail":"example@exmaple.com","msg":{"body":"cY69zbXyFB","msg":{"body":"2SbpAXwdpd"}},"name":"","uuid":"a65dd941-6bba-448c-8512-371b9023dad5"}{"enable":true,"id":84,"ipv4":"25.24.132.40","ipv6":"e03a:42a7:69e0:6c76:d22c:f269:4e2b:1ff8","mail":"example@exmaple.com","msg":{"body":"w3hBq3Fnx6","msg":{"body":"li31kSutUb"}},"name":"","uuid":"7eafb85a-9938-4590-9c36-5d4fc8d796df"}{"enable":false,"id":16,"ipv4":"188.247.192.19","ipv6":"ebd9:4005:62f7:6816:552b:25fb:a48d:4236","mail":"example@exmaple.com","msg":{"body":"33uUhEUbgM","msg":{"body":"JQyqZeUmV8"}},"name":"","uuid":"1ecf6196-95fd-4b28-b278-f7cfa235574a"}
 ```
 
 ## Spec file
